@@ -1,19 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import Home from './components/Home';
+import JoinUs from './components/JoinUs'
+
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { animateScroll as scroll } from 'react-scroll';
+
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 function App() {
+  useEffect(() => {
+    AOS.init();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleScroll = () => {
+    if (window.pageYOffset === 0) {
+      scroll.scrollToTop();
+    }
+  };
+
   return (
-    <div className="App">
-      <h1>
-        Support
-      </h1>
-      <h3>
-        Email us for any questions or support
-      </h3>
-      <a href='mailto:<fitness.click.llc@gmail.com>?subject=Click Fitness App Feedback&'>
-        fitness.click.llc@gmail.com
-      </a>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/join" element={<JoinUs />} />
+      </Routes>
+    </Router>
   );
 }
 
